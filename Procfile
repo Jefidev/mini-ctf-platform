@@ -1,0 +1,1 @@
+web: gunicorn mini_ctf_platform.wsgi
