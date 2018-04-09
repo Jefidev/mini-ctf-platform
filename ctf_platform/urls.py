@@ -1,9 +1,9 @@
-from django.urls import re_path
+from django.urls import re_path, path
 from . import views
 
 urlpatterns = [
-    re_path(r'^$', views.index, name='index'),
-    re_path(r'scoreboard', views.scoreboard, name='scoreboard'),
-    re_path(r'challenge/(?P<challenge_id>\d)$', views.challenge, name='challenge'),
-    re_path(r'team/(?P<team_id>\d)$', views.team, name='team')
+    path('', views.index, name='index'),
+    path('scoreboard', views.scoreboard, name='scoreboard'),
+    path('challenge/<int:challenge_id>', views.challenge, name='challenge'),
+    path('team/<int:team_id>', views.team, name='team')
 ]
