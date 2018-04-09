@@ -1,7 +1,34 @@
 from django.db import models
-from django.urls import reverse
 from django.utils import timezone
 from randomuser import RandomUser
+
+
+class CTF:
+
+    @staticmethod
+    def create_teams(nb=1):
+        for _ in range(0,nb):
+            team = Team.create_random()
+            team.save()
+            print("Team {} created with password {}".format(team.name, team.pwd))
+
+    @staticmethod
+    def disable_teams():
+        for team in Team.objects.all():
+            team.enabled = False
+            team.save()
+
+    @staticmethod
+    def clear_data():
+        for submission in FlagSubmission.objects.all():
+            submission.delete()
+        for team in Team.objects.all():
+            team.delete()
+
+    @staticmethod
+    def clear_challenges():
+        for chal in Challenge.objects.all():
+            chal.delete()
 
 
 class Challenge(models.Model):

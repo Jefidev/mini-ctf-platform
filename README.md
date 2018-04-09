@@ -18,3 +18,53 @@ DATABASES = {
     }
 }
 ```
+
+## Créer les équipes pour un CTF
+La première chose à faire est de se connecter au shell de Django : 
+```
+python manage.py shell
+```
+
+Les commandes suivantes créeront ensuite 5 équipes aléatoires et en afficheront les données : 
+```
+>>> from ctf_platform.models import CTF
+>>> CTF.create_teams(nb=5)
+Team heavyleopard987 created with password 456123
+Team redsnake919 created with password redbull
+Team heavyostrich351 created with password womble
+Team tinyfish773 created with password east
+Team ticklishmeercat110 created with password xxxxxx
+```
+
+## Terminer un CTF
+La première chose à faire est de se connecter au shell de Django : 
+```
+python manage.py shell
+```
+
+Les commandes suivantes désactiveront ensuite toutes les équipes rendant impossible la soumission.
+
+**Il faut noter ici que les équipes disparaitront également du scoreboard. Il est donc nécessaire de 
+sauvegarder le scoreboard *AVANT* d'effectuer cette commande** 
+
+```
+>>> from ctf_platform.models import CTF
+>>> CTF.disable_teams()
+```
+
+## Nettoyer la base de données après un CTF
+La première chose à faire est de se connecter au shell de Django : 
+```
+python manage.py shell
+```
+
+Les commandes suivantes supprimeront ensuite les équipes et leurs soumissions de flag aux challenges :
+```
+>>> from ctf_platform.models import CTF
+>>> CTF.clear_data()
+```
+
+Si vous souhaitez en plus supprimer les challenges, veuillez ajouter la commande suivante : 
+```
+>>> CTF.clear_challenges()
+```
