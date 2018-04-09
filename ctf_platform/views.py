@@ -12,6 +12,17 @@ def index(request):
     return {"challenges": challenges, "scoreboard": scoreboard}
 
 
+@view(render_to='ctf_platform/scoreboard.html')
+def scoreboard(request):
+    scoreboard = list(Team.objects.filter(enabled=True))
+    scoreboard.sort(key=lambda x: x.points(), reverse=True)
+
+    limited_scoreboard = list(Team.objects.filter(enabled=True))[:5]
+    limited_scoreboard.sort(key=lambda x: x.points(), reverse=True)
+
+    return {"scoreboard": scoreboard, "limited_scoreboard": limited_scoreboard}
+
+
 @view(render_to='ctf_platform/challenge.html')
 def challenge(request, challenge_id):
 
