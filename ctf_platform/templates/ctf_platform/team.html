@@ -50,31 +50,22 @@
         <div class="col-lg-8">
 
             <!-- Title -->
-            <h1 class="mt-4">Scoreboard</h1>
+            <h1 class="mt-4">Overview of team : {{selected_team.name}}</h1>
 
             <hr>
 
-            <div class="table-responsive">
-                <table class="table-bordered" style="width: 100%;">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Team name</th>
-                        <th>Team points</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for team in scoreboard %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td><a href="{% url 'team' team.team_id %}">{{ team.name }}</a></td>
-                        <td>{{ team.points }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
+            <p><strong>{{selected_team.points}} points</strong></p>
 
-                </table>
-            </div>
+            <hr>
+
+            <h3 class="mt-4">Solved challenges</h3>
+            <ul>
+                {% for chall in selected_team.challenges_finished.all %}
+                <li><a href="{% url 'challenge' chall.chall_id %}">{{ chall.title }}</a> - {{ chall.points }}</li>
+                {% endfor %}
+            </ul>
+
+            <hr>
 
         </div>
 
@@ -90,6 +81,7 @@
                         <li>{{ team.name }} - {{ team.points }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{% url 'scoreboard' %}">Complete scoreboard &rarr;</a>
                 </div>
             </div>
 
