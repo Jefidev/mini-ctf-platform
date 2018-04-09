@@ -32,4 +32,5 @@ def challenge(request, challenge_id):
             is_flag_ok = submission.validate()
 
     scoreboard = list(Team.objects.filter(enabled=True))[:5]
+    scoreboard.sort(key=lambda x: x.points(), reverse=True)
     return locals()
