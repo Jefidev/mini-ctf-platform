@@ -55,7 +55,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="card-title">{{ chall.title }}</h2>
-                    <p class="card-text">{{ chall.description }}</p>
+                    <p class="card-text">{{ chall.description | safe | truncatewords:80 }}</p>
                     <a href='{% url "challenge" chall.chall_id %}' class="btn btn-primary">More information &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
