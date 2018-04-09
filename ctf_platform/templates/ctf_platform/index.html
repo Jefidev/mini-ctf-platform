@@ -58,6 +58,9 @@
                     <p class="card-text">{{ chall.description }}</p>
                     <a href='{% url "challenge" chall.chall_id %}' class="btn btn-primary">More information &rarr;</a>
                 </div>
+                <div class="card-footer text-muted">
+                    {{chall.points}} points
+                </div>
             </div>
             {% endfor %}
 
