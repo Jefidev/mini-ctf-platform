@@ -90,6 +90,16 @@ class FlagSubmission(models.Model):
     def validate(self):
         flagged = self.challenge.flag == self.submitted
         if flagged:
-            self.team.challenges_finished.add(self.challenge)
-            self.team.save()
+            if self.challenge in self.team.challenges_finished.all():
+                raise AlreadyFlaggedException()
+            else:
+                self.team.challenges_finished.add(self.challenge)
+                self.team.save()
         return flagged
+# --------------
+#   Exceptions
+# --------------
+
+
+class AlreadyFlaggedException(Exception):
+    pass

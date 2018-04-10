@@ -73,8 +73,12 @@
 
                         {% if is_flag_ok %}
                             <p style="color: green">You earned the flag !</p>
-                        {% elif not is_flag_ok %}
+                        {% elif not is_flag_ok and not already_flagged %}
                             <p style="color: red">The flag is incorrect :(</p>
+                        {% endif %}
+
+                        {% if already_flagged %}
+                        <p style="color: green">You earned the flag but ... wait ... you already flagged this challenge !</p>
                         {% endif %}
                     {% endif %}
                     <form action="{% url "challenge" chall.chall_id %}" method="post">

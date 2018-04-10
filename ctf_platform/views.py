@@ -1,6 +1,6 @@
 from django_quicky import view
 from django.shortcuts import get_object_or_404
-from ctf_platform.models import Challenge, Team, FlagSubmission
+from ctf_platform.models import Challenge, Team, FlagSubmission, AlreadyFlaggedException
 from .forms import FlagSubmissionForm
 
 
@@ -28,7 +28,10 @@ def challenge(request, challenge_id):
         if is_team_ok:
             submission = FlagSubmission(team=teams[0], challenge=chall, submitted=flag)
             submission.save()
-            is_flag_ok = submission.validate()
+            try:
+                is_flag_ok = submission.validate()
+            except AlreadyFlaggedException:
+                already_flagged = True
 
     scoreboard = list(Team.objects.filter(enabled=True))[:5]
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
