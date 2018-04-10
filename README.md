@@ -32,11 +32,11 @@ Les commandes suivantes créeront ensuite 5 équipes aléatoires et en affichero
 ```
 >>> from ctf_platform.models import CTF
 >>> CTF.create_teams(nb=5)
-Team heavyleopard987 created with password 456123
-Team redsnake919 created with password redbull
-Team heavyostrich351 created with password womble
-Team tinyfish773 created with password east
-Team ticklishmeercat110 created with password xxxxxx
+Team tinyelephant159 created
+Team silverswan637 created
+Team purplebear200 created
+Team bigpanda819 created
+Team silverkoala312 created
 ```
 
 ## Terminer un CTF

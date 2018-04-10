@@ -20,11 +20,10 @@ def challenge(request, challenge_id):
     form = FlagSubmissionForm(request.POST or None)
     if form.is_valid():
         team = form.cleaned_data['team']
-        pwd = form.cleaned_data['pwd']
         flag = form.cleaned_data['flag']
 
         posted = True
-        teams = Team.objects.filter(name=team, pwd=pwd, enabled=True)
+        teams = Team.objects.filter(name=team, enabled=True)
         is_team_ok = len(teams) > 0
         if is_team_ok:
             submission = FlagSubmission(team=teams[0], challenge=chall, submitted=flag)

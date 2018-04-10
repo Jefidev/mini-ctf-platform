@@ -7,10 +7,10 @@ class CTF:
 
     @staticmethod
     def create_teams(nb=1):
-        for _ in range(0,nb):
+        for _ in range(0, nb):
             team = Team.create_random()
             team.save()
-            print("Team {} created with password {}".format(team.name, team.pwd))
+            print("Team {} created".format(team.name))
 
     @staticmethod
     def disable_teams():
@@ -49,7 +49,6 @@ class Challenge(models.Model):
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    pwd = models.CharField(max_length=100)
     enabled = models.BooleanField(default=True)
     challenges_finished = models.ManyToManyField(Challenge, blank=True)
 
@@ -61,8 +60,7 @@ class Team(models.Model):
     def create_random(cls):
         user = RandomUser()
         name = user.get_username()
-        pwd = user.get_password()
-        return Team(name=name, pwd=pwd, enabled=True)
+        return Team(name=name, enabled=True)
 
     def points(self):
         total = 0
