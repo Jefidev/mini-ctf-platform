@@ -7,9 +7,9 @@ from .forms import FlagSubmissionForm
 @view(render_to='ctf_platform/index.html')
 def index(request):
     challenges = Challenge.objects.all()
-    scoreboard = list(Team.objects.filter(enabled=True))[:5]
+    scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
-    return {"challenges": challenges, "scoreboard": scoreboard}
+    return {"challenges": challenges, "scoreboard": scoreboard[:5]}
 
 
 @view(render_to='ctf_platform/challenge.html')
@@ -33,8 +33,9 @@ def challenge(request, challenge_id):
             except AlreadyFlaggedException:
                 already_flagged = True
 
-    scoreboard = list(Team.objects.filter(enabled=True))[:5]
+    scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
+    scoreboard = scoreboard[:5]
     return locals()
 
 
@@ -43,17 +44,17 @@ def scoreboard(request):
     scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
 
-    limited_scoreboard = list(Team.objects.filter(enabled=True))[:5]
+    limited_scoreboard = list(Team.objects.filter(enabled=True))
     limited_scoreboard.sort(key=lambda x: x.points(), reverse=True)
 
-    return {"scoreboard": scoreboard, "limited_scoreboard": limited_scoreboard}
+    return {"scoreboard": scoreboard, "limited_scoreboard": limited_scoreboard[:5]}
 
 
 @view(render_to='ctf_platform/team.html')
 def team(request, team_id):
     team = get_object_or_404(Team, team_id=team_id)
 
-    limited_scoreboard = list(Team.objects.filter(enabled=True))[:5]
+    limited_scoreboard = list(Team.objects.filter(enabled=True))
     limited_scoreboard.sort(key=lambda x: x.points(), reverse=True)
 
-    return {"limited_scoreboard": limited_scoreboard, "selected_team": team}
+    return {"limited_scoreboard": limited_scoreboard[:5], "selected_team": team}
