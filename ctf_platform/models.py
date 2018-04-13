@@ -6,9 +6,15 @@ from randomuser import RandomUser
 class CTF:
 
     @staticmethod
-    def create_teams(nb=1):
-        for _ in range(0, nb):
-            team = Team.create_random()
+    def create_teams(nb=1, base_name=None):
+
+        assert base_name is None or isinstance(base_name, str)
+
+        for team_nb in range(0, nb):
+            if base_name is None:
+                team = Team.create_random()
+            else:
+                team = Team.create_with_name((base_name + "{}").format(team_nb + 1))
             team.save()
             print("Team {} created".format(team.name))
 
@@ -60,6 +66,13 @@ class Team(models.Model):
     def create_random(cls):
         user = RandomUser()
         name = user.get_username()
+        return Team(name=name, enabled=True)
+
+    @classmethod
+    def create_with_name(cls, name):
+        assert name is not None
+        assert isinstance(name, str)
+
         return Team(name=name, enabled=True)
 
     def points(self):

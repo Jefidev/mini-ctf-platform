@@ -39,6 +39,17 @@ Team bigpanda819 created
 Team silverkoala312 created
 ```
 
+Pour créer des équipes à partir d'une base de nom fixe, utilisez la commande suivante : 
+```
+>>> from ctf_platform.models import CTF
+>>> CTF.create_teams(nb=5, base_name="Equipe")
+Team Equipe1 created
+Team Equipe2 created
+Team Equipe3 created
+Team Equipe4 created
+Team Equipe5 created
+```
+
 ## Terminer un CTF
 La première chose à faire est de se connecter au shell de Django : 
 ```
