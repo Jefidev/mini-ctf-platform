@@ -2,6 +2,7 @@ from django_quicky import view
 from django.shortcuts import get_object_or_404
 from ctf_platform.models import Challenge, Team, FlagSubmission, AlreadyFlaggedException
 from .forms import FlagSubmissionForm
+from .parameters import site_name
 
 
 @view(render_to='ctf_platform/index.html')
@@ -9,7 +10,7 @@ def index(request):
     challenges = Challenge.objects.all()
     scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
-    return {"challenges": challenges, "scoreboard": scoreboard[:5]}
+    return {"challenges": challenges, "scoreboard": scoreboard[:5], "site_name": site_name}
 
 
 @view(render_to='ctf_platform/challenge.html')
@@ -36,7 +37,7 @@ def challenge(request, challenge_id):
     scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
     scoreboard = scoreboard[:5]
-    return locals()
+    return {"chall": chall, "scoreboard": scoreboard, "site_name": site_name}
 
 
 @view(render_to='ctf_platform/scoreboard.html')
@@ -47,7 +48,7 @@ def scoreboard(request):
     limited_scoreboard = list(Team.objects.filter(enabled=True))
     limited_scoreboard.sort(key=lambda x: x.points(), reverse=True)
 
-    return {"scoreboard": scoreboard, "limited_scoreboard": limited_scoreboard[:5]}
+    return {"scoreboard": scoreboard, "limited_scoreboard": limited_scoreboard[:5], "site_name": site_name}
 
 
 @view(render_to='ctf_platform/team.html')
@@ -57,4 +58,4 @@ def team(request, team_id):
     limited_scoreboard = list(Team.objects.filter(enabled=True))
     limited_scoreboard.sort(key=lambda x: x.points(), reverse=True)
 
-    return {"limited_scoreboard": limited_scoreboard[:5], "selected_team": team}
+    return {"limited_scoreboard": limited_scoreboard[:5], "selected_team": team, "site_name": site_name}
