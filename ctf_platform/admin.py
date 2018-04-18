@@ -19,8 +19,8 @@ class ChallengeAdmin(admin.ModelAdmin):
 
 
 class FlagSubmissionAdmin(admin.ModelAdmin):
-    list_display = ('date', 'team', 'challenge', 'submitted')
-    list_filter = ('date', 'team', 'challenge')
+    list_display = ('date', 'team', 'challenge', 'submitted', 'already_flagged')
+    list_filter = ('date', 'team', 'challenge', 'already_flagged')
     date_hierarchy = 'date'
     ordering = ('date',)
     search_fields = ('team', 'challenge')

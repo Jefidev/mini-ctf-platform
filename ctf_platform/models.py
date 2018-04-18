@@ -92,6 +92,7 @@ class FlagSubmission(models.Model):
     date = models.DateTimeField(default=timezone.now,
                                 verbose_name="Submission date")
     submitted = models.CharField(max_length=100, default="Undefined")
+    already_flagged = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Flag submission"

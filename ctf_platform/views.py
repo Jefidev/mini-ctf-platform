@@ -27,17 +27,23 @@ def challenge(request, challenge_id):
         teams = Team.objects.filter(name=team, enabled=True)
         is_team_ok = len(teams) > 0
         if is_team_ok:
-            submission = FlagSubmission(team=teams[0], challenge=chall, submitted=flag)
+            submission = FlagSubmission(team=teams[0], challenge=chall, submitted=flag, already_flagged=False)
             submission.save()
             try:
                 is_flag_ok = submission.validate()
             except AlreadyFlaggedException:
                 already_flagged = True
+                submission.already_flagged = True
+                submission.save()
 
     scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
     scoreboard = scoreboard[:5]
-    return {"chall": chall, "scoreboard": scoreboard, "site_name": site_name}
+
+    render_data = locals()
+    render_data["site_name"] = site_name
+
+    return render_data
 
 
 @view(render_to='ctf_platform/scoreboard.html')
