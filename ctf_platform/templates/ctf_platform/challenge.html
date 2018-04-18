@@ -16,7 +16,9 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'ctf_platform/css/blog-post.css' %}" rel="stylesheet">
-
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+            integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -50,7 +52,10 @@
         <div class="col-lg-8">
 
             <!-- Title -->
-            <h1 class="mt-4">{{ chall.title}}</h1>
+            <h1 class="mt-4">
+                {% if chall in solved_challenges %} <i style="color:green;" class="fas fa-flag-checkered"></i> {% endif %}
+                {{ chall.title}}
+            </h1>
 
             <hr>
 

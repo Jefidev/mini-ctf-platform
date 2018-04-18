@@ -10,13 +10,33 @@ def index(request):
     challenges = Challenge.objects.all()
     scoreboard = list(Team.objects.filter(enabled=True))
     scoreboard.sort(key=lambda x: x.points(), reverse=True)
-    return {"challenges": challenges, "scoreboard": scoreboard[:5], "site_name": site_name}
+
+    solved_challenges = list()
+    if "team_name" in request.session:
+        print(request.session["team_name"])
+        teams = Team.objects.filter(name=request.session["team_name"])
+        if len(teams) == 1:
+            team = teams[0]
+            solved_challenges = team.challenges_finished.all()
+
+    return {"challenges": challenges,
+            "scoreboard": scoreboard[:5],
+            "site_name": site_name,
+            "solved_challenges": solved_challenges}
 
 
 @view(render_to='ctf_platform/challenge.html')
 def challenge(request, challenge_id):
 
     chall = get_object_or_404(Challenge, chall_id=challenge_id)
+
+    solved_challenges = list()
+    if "team_name" in request.session:
+        print(request.session["team_name"])
+        teams = Team.objects.filter(name=request.session["team_name"])
+        if len(teams) == 1:
+            team = teams[0]
+            solved_challenges = team.challenges_finished.all()
 
     form = FlagSubmissionForm(request.POST or None)
     if form.is_valid():
@@ -27,6 +47,9 @@ def challenge(request, challenge_id):
         teams = Team.objects.filter(name=team, enabled=True)
         is_team_ok = len(teams) > 0
         if is_team_ok:
+
+            request.session["team_name"] = team
+
             submission = FlagSubmission(team=teams[0], challenge=chall, submitted=flag, already_flagged=False)
             submission.save()
             try:
@@ -42,6 +65,7 @@ def challenge(request, challenge_id):
 
     render_data = locals()
     render_data["site_name"] = site_name
+    render_data["solved_challenged"] = solved_challenges
 
     return render_data
 

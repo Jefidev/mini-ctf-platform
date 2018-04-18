@@ -16,7 +16,9 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'ctf_platform/css/blog-home.css' %}" rel="stylesheet">
-
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+            integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -59,7 +61,7 @@
                     <a href='{% url "challenge" chall.chall_id %}' class="btn btn-primary">More information &rarr;</a>
                 </div>
                 <div class="card-footer text-muted">
-                    {{chall.points}} points
+                    {{chall.points}} points {% if chall in solved_challenges %} - <i style="color:green;" class="fas fa-flag-checkered"></i> {% endif %}
                 </div>
             </div>
             {% endfor %}
